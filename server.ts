@@ -5,7 +5,7 @@ import next from 'next';
 import { setupGameSocket } from './src/server/gameHub';
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
+const hostname = '0.0.0.0';
 const port = 3000;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });
@@ -18,7 +18,7 @@ app.prepare().then(() => {
 
     setupGameSocket(io);
 
-    server.all('*', (req, res) => {
+    server.all('(.*)', (req, res) => {
         return handle(req, res);
     });
 
