@@ -6,8 +6,8 @@ import { setupGameSocket } from './src/server/gameHub';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
-const port = 3000;
-// when using middleware `hostname` and `port` must be provided below
+const port = parseInt(process.env.PORT || '3000', 10);
+
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
@@ -22,7 +22,11 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    httpServer.listen(port, () => {
+    httpServer.listen(port, hostname, () => {
         console.log(`> Ready on http://${hostname}:${port}`);
+        console.log('> Socket.io initialized');
     });
+}).catch(err => {
+    console.error('Error preparing app:', err);
+    process.exit(1);
 });
