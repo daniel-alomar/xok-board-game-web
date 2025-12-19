@@ -43,6 +43,12 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Build the custom server
+# We use npx tsc to compile server.ts to server.js
+# Ensure tsconfig.server.json is used or default works
+COPY tsconfig.server.json ./
+RUN npx tsc --project tsconfig.server.json
+
 # Copy custom server files if not bundled.
 # Standalone mode usually bundles next.js, but custom server.ts?
 # Next.js standalone output doesn't include the custom server logic by default if it's external.
@@ -65,4 +71,5 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["npm", "start"]
+# Directly run the compiled server.js, bypassing npm scripts to avoid confusion
+CMD ["node", "server.js"]
