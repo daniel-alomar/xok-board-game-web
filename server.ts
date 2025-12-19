@@ -5,7 +5,7 @@ import next from 'next';
 import { setupGameSocket } from './src/server/gameHub';
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = '0.0.0.0';
+const hostname = 'localhost'; // Internal use for Next.js
 const port = parseInt(process.env.PORT || '3000', 10);
 
 const app = next({ dev, hostname, port });
