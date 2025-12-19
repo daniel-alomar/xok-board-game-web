@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' server.ts",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "echo 'CRASHING INTENTIONALLY' && exit 1",
     "lint": "eslint"
   },
   "dependencies": {
