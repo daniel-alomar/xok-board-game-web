@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node --project tsconfig.server.json server.ts",
+    "dev": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' server.ts",
     "build": "next build",
-    "start": "NODE_ENV=production ts-node --project tsconfig.server.json server.ts",
+    "start": "node -e 'require(\"http\").createServer((q,r)=>r.end(\"RAW_ALIVE\")).listen(process.env.PORT||3000,\"0.0.0.0\")'",
     "lint": "eslint"
   },
   "dependencies": {
